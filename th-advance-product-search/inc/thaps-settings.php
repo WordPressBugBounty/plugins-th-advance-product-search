@@ -60,17 +60,42 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 		}
 
 		public function settings_form() {
+
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( __( 'You do not have sufficient permissions to access this page.','th-advance-product-search' ) );
+				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.','th-advance-product-search' ) );
 			}
 		
 			?>
 			<div id="thaps" class="settings-wrap">
+				<?php $this->options_tabs(); ?>
+
 				
-				<form method="post" action="" enctype="multipart/form-data" class="thaps-setting-form  <?php echo esc_attr($this->form_add_class());?>">
+				
+                   <div class="setting-wrap integration">
+
+                   	 <div class="top-header">
+                <h2 class="tabheading"><?php esc_html_e("Integration", 'th-advance-product-search'); ?></h2>
+               
+               	 <a href="<?php echo esc_url( 'https://themehunk.com/advance-product-search/' ); ?>"
+			   title="<?php esc_attr_e( 'Upgrade', 'th-advance-product-search' ); ?>"
+			   target="_blank" class="upgrade-button">
+				<?php esc_html_e( 'Upgrade', 'th-advance-product-search' ); ?>
+			</a>
+					  <p class="submit thaps-button-wrapper">
+						
+						
+						 <button  disabled id="submit" class="button button-primary" value="<?php esc_html_e( 'Save All Changes', 'th-advance-product-search' ); ?>"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save transition-transform group-hover:scale-110" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg></span><span class="text"><?php esc_html_e( 'Save All Changes', 'th-advance-product-search-pro' ); ?></span>
+						 </button>
+						  <a onclick="return confirm('<?php esc_attr_e( 'Are you sure to reset current settings?', 'th-advance-product-search' ); ?>');" class="reset" href="#"><?php esc_html_e( 'Reset all', 'th-advance-product-search-pro' ); ?>
+						</a>
+					</p>
+
+					</div>
+
+                   <div class="setting-content">            
+					<form method="post" action="" enctype="multipart/form-data" class="thaps-setting-form  <?php echo esc_attr($this->form_add_class());?>">
                  <input type="hidden" name="action" value="thaps_form_setting">
-					<?php $this->options_tabs(); ?>
-                     <div class="setting-wrap">
+
 					 <div id="settings-tabs">
 						<?php foreach ( $this->fields as $tab ):
 
@@ -85,45 +110,38 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 								 class="settings-tab thaps-setting-tab"
 								 style="<?php echo ! esc_attr($is_active) ? 'display: none' : '' ?>">
 								 
-								<?php foreach ( $tab['sections'] as $section ):
+								<?php foreach ( $tab['sections'] as $section ): ?>
+									<div class="thaps-section-wrapper <?php echo esc_attr($tab['id']); ?>" data-section="<?php echo esc_attr($section['id']); ?>">
+					        <?php	$this->do_settings_sections( $tab['id'] . $section['id'] ); ?>
+					   				 </div>
 
-					        	$this->do_settings_sections( $tab['id'] . $section['id'] );
-
-								endforeach; ?>
+							<?php	endforeach; ?>
 							</div>
 
 						<?php endforeach; ?>
 					</div>
+
+					</form>
+
 					<?php
 					$this->last_tab_input();
 					
 					?>
-					<p class="submit thaps-button-wrapper">
-						
-						 <a class="reset" href="#"><?php esc_html_e( 'Reset all', 'th-advance-product-search' ); ?>
-						</a>
-						 <button  disabled id="submit" class="button button-primary" value="<?php esc_html_e( 'Save Changes', 'th-advance-product-search' ) ?>"><span class="dashicons dashicons-image-rotate spin"></span><span><?php esc_html_e( 'Save Changes', 'th-advance-product-search' ) ?></span>
-						 </button>
-					</p> 
+
+			</div> 
+
+			
+			<?php require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . '/inc/tapsp-live-preview.php'; ?> 
+			<?php require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . '/inc/tapsp-reset.php'; ?> 
+			<?php require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . '/inc/tapsp-help.php'; ?>
+			<?php require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . '/inc/thaps-premium.php'; ?>
+
+
 
             </div>
-            <div class="thaps-notes-wrap">
-
-            	<div class="thaps-notes-row thaps-wrap-doc"><h4 class="wrp-title"><?php esc_html_e( 'Documentation', 'th-advance-product-search' ) ?></h4><p><?php esc_html_e( 'Want to know how this plugin works. Read our Documentation.', 'th-advance-product-search' ) ?></p><a target="_blank" href="<?php echo esc_url('https://themehunk.com/docs/th-advance-product-search/'); ?>"><?php esc_html_e( 'Read Now', 'th-advance-product-search' ) ?></a></div>
-
-            	<div class="thaps-notes-row thaps-wrap-pro"><h4 class="wrp-title"><?php esc_html_e( 'Unlock TH Advance Product Search Pro', 'th-advance-product-search' ) ?></h4><img src='<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'th-advance-search-pro-banner.png') ?>' alt="th-advance-search"><a target="_blank" href="<?php echo esc_url('https://themehunk.com/advance-product-search/'); ?>"><?php esc_html_e( 'Upgrade Now', 'th-advance-product-search' ) ?></a>
-
-            	</div>
-
-            	<div class="thaps-notes-row thaps-wrap-img">
-	               	<a target="_blank" href="<?php echo esc_url('https://themehunk.com/th-shop-mania/'); ?>"><img src='<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'th-shop-mania-ad.png') ?>' alt="th-shop-mania">
-	               	</a>
-            	</div>
-               </div>
-
-               
-            
-				</form>
+           
+				
+				
 			</div>
 			<?php
 			
@@ -157,33 +175,72 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 		   return $new_input;
 
 	    }
+	
 		public function options_tabs() {
+
 			?>
 
 			<div class="nav-tab-wrapper wp-clearfix">
-				<div class="top-wrap"><div id="logo"><img src='<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'th-logo.png') ?>' alt="th-logo"/></div>
+
+				<div class="top-wrap">
+
+					<div id="logo">
+						<a href="<?php echo esc_url('https://themehunk.com/advance-product-search/'); ?>" target="_blank">
+						<img src='<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI.'images/resp-logo.png') ?>' alt="thaps-logo" class="resp-logo"/>
+						<img src='<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI.'images/th-logo.png') ?>' alt="th-logo" class="th-logo"/>
+					</a>
+					</div>
+
 				  <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
 			     </div>
+
 				<?php foreach ( $this->fields as $tabs ): ?>
-					<a data-target="<?php echo esc_attr($tabs['id']); ?>"  class="thaps-setting-nav-tab nav-tab <?php echo esc_html($this->get_options_tab_css_classes( $tabs )); ?> " href="#<?php echo esc_attr($tabs['id']); ?>"><span class="dashicons <?php echo $this->icon_list($tabs['id']); ?>"></span><?php echo esc_html($tabs['title']); ?></a>
+
+				  <a data-target="<?php echo esc_attr($tabs['id']); ?>"  class="thaps-setting-nav-tab nav-tab <?php echo esc_html($this->get_options_tab_css_classes( $tabs )); ?> " href="#<?php echo esc_attr($tabs['id']); ?>" title="<?php echo esc_html($tabs['title']); ?>"><span><?php echo $this->icon_list($tabs['id']); ?></span><?php echo esc_html($tabs['title']); ?>	
+					</a>
+
 				<?php endforeach; ?>
+
+				<div class="thaps-collapse-sidebar">
+				    <button id="thaps-toggle-sidebar">
+				        <span class="dashicons dashicons-arrow-left-alt2"></span>
+				        <span class="collapse-text">Collapse Sidebar</span>
+				    </button>
+				</div>
+				
 			</div>
+
 			<?php
 		}
-		function icon_list($id ='dashicons-menu'){
-			$icon = array(
-				'integration'=>'dashicons-admin-appearance',
-				'search-bar' => 'dashicons-admin-generic',
-				'autosetting'=>'dashicons-hammer',
-				'style'=>'dashicons-color-picker',
-				'analytics'=>'dashicons-analytics',
-				'premium'=>'dashicons-unlock',
-				'thaps_usefull_plugin'=>'dashicons-admin-plugins',
-		);
+			function icon_list($id = '') {
 
-			return $icon[$id];
+    $icons = array(
+        'integration'      => 'integration.svg',
+        'search-bar'       => 'setting.svg',
+        'autosetting'      => 'completesetting.svg',
+        'search-configure' => 'searchconfig.svg',
+        'style'            => 'interface.svg',
+        'analytics'        => 'analytics.svg',
+        'thaps_index_builder'    => 'loading.svg',
+        'thaps_fuzzy_settings'   => 'fuzzy.svg',
+        'reset'            => 'reset.svg',
+        'help'            => 'help.svg',
+    );
 
-		}
+    if (!isset($icons[$id])) {
+        return '';
+    }
+
+    // Absolute path to plugin root
+    $svg_path = plugin_dir_path(dirname(__FILE__)) . 'images/' . $icons[$id];
+
+    if (file_exists($svg_path)) {
+        return file_get_contents($svg_path);
+    }
+
+    return '';
+}
 
 		private function get_last_active_tab() {
 			$last_option_tab = '';
@@ -213,28 +270,59 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 			global $wp_settings_sections, $wp_settings_fields;
 
 			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+
 				return;
 			}
 
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+                
+				// if ( $section['title'] ) {
 
-				if ( $section['title'] ) {
+				// 	echo "<h2 class=".esc_attr($section['id']).">".esc_html($section['title'])."</h2>";
 
-					echo "<h2 class=".esc_attr($section['id']).">".esc_html($section['title'])."</h2>";
-
-				}
+				// }
                 
 				if ( $section['callback'] ) {
+
 					call_user_func( $section['callback'], $section );
+
 				}
 
 				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+
 					continue;
+
 				}
 
-				echo '<table class="form-table" id='.esc_attr($section['id']).'>';
+				echo '<div class="form-table" id='.esc_attr($section['id']).'>';
+
+				// To add subtitle start
+				$subtitle= '';
+				foreach ( $this->fields as $tab ) {
+				    foreach ( $tab['sections'] as $sec ) {
+				        if ( $tab['id'] . $sec['id'] === $page ) {
+				            if ( ! empty( $sec['subtitle'] ) ) {
+				                $subtitle = $sec['subtitle'];
+				            }
+				        }
+				    }
+				}
+
+				echo '<div class="headingwrapper">';
+				if ( $section['title'] ) {
+
+					echo '<h2 class="heading ' . esc_attr($section['id']) . '">' . esc_html($section['title']) . '</h2>';
+
+				}
+
+				if ( $subtitle ) {
+				    echo '<p class="thaps-section-subtitle">' . esc_html( $subtitle ) . '</p>';
+				}
+				echo '</div>';
+
+					// To add subtitle End
 				$this->do_settings_fields( $page, $section['id'] );
-				echo '</table>';
+				echo '</div>';
 			}
 		}
 
@@ -251,10 +339,13 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 		}
 
 		private function do_settings_fields( $page, $section ) {
+
 			global $wp_settings_fields;
 
 			if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+
 				return;
+
 			}
 
 			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
@@ -262,31 +353,32 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 				$custom_attributes = $this->array2html_attr( isset( $field['args']['attributes'] ) ? $field['args']['attributes'] : array() );
 
 				$wrapper_id = ! empty( $field['args']['id'] ) ? esc_attr( $field['args']['id'] ) . '-wrapper' : '';
+
 				$dependency = ! empty( $field['args']['require'] ) ? $this->build_dependency( $field['args']['require'] ) : '';
 
-				printf( '<tr id="%s" %s %s>', $wrapper_id, $custom_attributes, $dependency );
+				printf( '<div id="%s" class="thaps-settings-row" %s %s>', $wrapper_id, $custom_attributes, $dependency );
 
-				 if ( isset( $field['args']['usefull'] ) ) {
-					echo '<td colspan="2" style="padding: 0; margin: 0">';
-					$this->usefullplugin_field_callback( $field['args'] );
-					echo '</td>';
-			  	}else{
-					echo '<th scope="row" class="thaps-settings-label">';
+				
+					echo '<div scope="row" class="thaps-settings-label">';
+
 					if ( ! empty( $field['args']['label_for'] ) ) {
+
 						echo '<label for="' . esc_attr( $field['args']['label_for'] ) . '">' . esc_html($field['title']). '</label>';
+
 					} else {
+
 						echo esc_html($field['title']);
 					}
 
-					echo '</th>';
-					echo '<td class="thaps-settings-field-content">';
+					echo '</div>';
+					echo '<div class="thaps-settings-field-content">';
 					call_user_func( $field['callback'], $field['args'] );
-					echo '</td>';
-				}
+					echo '</div>';
 				
-				   echo '</tr>';
+				   echo '</div>';
 			}
 		}
+
 
         public function array2html_attr( $attributes, $do_not_add = array() ) {
 
@@ -366,14 +458,6 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 
 			    case 'analytics-html':
 					$this->analytics_html_field_callback( $field );
-					break;
-
-				case 'premium-html':
-					$this->premium_html_field_callback( $field );
-					break;
-
-				case 'usefullplugin':
-					$this->usefullplugin_field_callback( $field );
 					break;		 			
 
 				default:
@@ -391,7 +475,7 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 			$attrs = isset( $args['attrs'] ) ? $this->make_implode_html_attributes( $args['attrs'] ) : '';?>
 
             <fieldset>
-            	<label>
+            	<label class="th-toggle">
             		<input <?php echo esc_attr($attrs); ?> type="checkbox" id="<?php echo esc_attr($args['id']); ?>-field" name="<?php echo esc_attr($this->settings_name);?>[<?php echo esc_attr($args['id']);?>]" value="1" <?php echo esc_attr(checked( $value, true, false ));?>> <?php if ( ! empty( $args['desc'] ) ) {  echo esc_html($args['desc']); } ?>
             	</label>     
             </fieldset>
@@ -459,21 +543,119 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 		}
 		
 
-		public function html_field_callback( $args ) {
-         if($args[ 'id' ]=='how-to-integrate'):
+			public function html_field_callback( $args ){
 
-			?>
+         if(
+
+         	$args[ 'id' ]=='how-to-integrate'):
+
+            $thaps_karr = array( 
+            'br' => array(),
+            'strong' => array(),
+            'code' => array(),
+            'a' => array( 
+                   'href' => array(),
+                   'target' => array(),
+                  )
+            );
+
+         	?>
 			
-		   <h4><?php _e( 'Easy 4 ways to integrate and display search bar your theme', 'th-advance-product-search' ); ?>: </h4>
-			<ol>
-				<li><?php printf( __( 'Using Shortcode - <br /> <br />%s    ', 'th-advance-product-search' ), '<ul><li>(a) <code>[th-aps]</code> To display default search bar. <br /> <br /> <img src="'.esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'search-1.png').'"> </li>  <li>(b) <code>[th-aps layout="bar_style"]</code> To display search bar with icon.  <br /> <br /> <img src="'.esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'search-2.png').'"> </li>   <li>(c) <code>[th-aps layout="icon_style"]</code> To display search icon only, Search bar will display on click. <br /> <br /> <img src="'.esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'search-3.png').'"></li> <li>(d) <code>[th-aps layout="flexible-style"]</code> To display search bar in PC and search icon in mobile view. </li></ul>' ); ?></li>
-                <br /> <br />
-				<li><?php printf( __( 'Using Widgets - Go to the Appearance > %s and choose "TH Advance Search Widget" <br /> <br /> <img src="'.esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'search-5.png').'">', 'th-advance-product-search' ), '<a href="' . admin_url( 'widgets.php' ) . '" target="_blank">' . __( 'Widgets Screen', 'th-advance-product-search' ) . '</a>' ); ?>
-                <br /> <br />
-				<li><?php printf( __( 'Using php - %s', 'th-advance-product-search' ), '<code>&lt;?php echo do_shortcode(\'[th-aps]\'); ?&gt;</code> Add this php code at the desired location in any php file. Search display style depends on shortcode you are using in the php code.' ); ?></li>
-                <br /> <br />
-				<li><?php printf( __( 'Display search bar as a menu. Go to the Appearance > %s . Check "TH Advance Search Bar" and click "Add to menu" button. <br /> <br /> <img src="'.esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'search-6.png').' " style="border: 1px solid #eee;">', 'th-advance-product-search' ), '<a href="' . admin_url( 'nav-menus.php' ) . '" target="_blank">' . __( 'Menu Screen', 'th-advance-product-search' ) . '</a>' ); ?></li>
-			</ol>
+		   <div class="th-search-docs">
+  <!-- Row 1 -->
+  <div class="th-doc-row">
+    
+    <div class="th-doc-left">
+      <h3><?php esc_html_e('Default Search Bar','th-advance-product-search-pro'); ?></h3>
+      <p><?php esc_html_e('Use the standard shortcode to display the default product search bar anywhere in your theme.','th-advance-product-search-pro'); ?></p>
+    </div>
+
+    <div class="th-doc-right">
+
+      <div class="th-search-preview">
+        <input type="text" placeholder="Product Search">
+        <button><?php esc_html_e('Submit','th-advance-product-search-pro'); ?></button>
+      </div>
+
+      <div class="th-shortcode">
+        <span><?php esc_html_e('Shortcode','th-advance-product-search-pro'); ?></span> <code>[th-aps]</code>
+      </div>
+      <div class="th-code-box">
+
+      	<pre><code>[th-aps]</code></pre>
+      	<div class="right">
+        <span class="th-code-label"><?php esc_html_e('Shortcode','th-advance-product-search-pro'); ?></span>
+
+        <button class="copy-btn"><?php esc_html_e('Copy','th-advance-product-search-pro'); ?></button>
+    	</div>
+
+        
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Row 2 -->
+  <div class="th-doc-row">
+
+    <div class="th-doc-left">
+      <h3><?php esc_html_e('Search Bar with Icon','th-advance-product-search-pro'); ?></h3>
+      <p><?php esc_html_e('Display a more modern search bar that includes a search icon inside the input field.','th-advance-product-search-pro'); ?></p>
+    </div>
+
+    <div class="th-doc-right">
+
+      <div class="th-search-preview icon">
+        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search h-4 w-4 text-gray-400" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></span>
+        <input type="text" placeholder="Product Search">
+      </div>
+
+      <div class="th-shortcode">
+        <span><?php esc_html_e('Shortcode:','th-advance-product-search-pro'); ?></span> <code>[th-aps layout="bar_style"]</code>
+      </div>
+
+          <div class="th-code-box">
+
+        <span class="th-code-label"><?php esc_html_e('Shortcode','th-advance-product-search-pro'); ?></span>
+
+        <button class="copy-btn"><?php esc_html_e('Copy','th-advance-product-search-pro'); ?></button>
+
+        <pre><code>[th-aps layout="bar_style"]</code></pre>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Row 3 -->
+  <div class="th-doc-row">
+
+    <div class="th-doc-left">
+      <h3><?php esc_html_e('PHP Template Tag','th-advance-product-search-pro'); ?></h3>
+      <p><?php esc_html_e('For developers: Insert the search bar directly into your theme’s PHP templates.','th-advance-product-search-pro'); ?></p>
+    </div>
+
+    <div class="th-doc-right">
+
+      <div class="th-code-box">
+
+        <span class="th-code-label"><?php esc_html_e('PHP','th-advance-product-search-pro'); ?></span>
+
+        <button class="copy-btn"><?php esc_html_e('Copy','th-advance-product-search-pro'); ?></button>
+
+        <pre><code>&lt;?php echo do_shortcode('[th-aps]'); ?&gt;</code></pre>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 		<?php 		
 			endif;
@@ -484,60 +666,32 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
             if($args[ 'id' ]=='how-to-integrate-analytics'):
 
 			?>
-             <h4><?php _e( 'Enable Site Search module Paste the following code into "functions.php" in your child theme.', 'th-advance-product-search' ); ?>: </h4>
-			<ul>
-				
-				
-				<li><?php printf( __( '%s', 'th-advance-product-search' ), '<code> apply_filters("thaps_enable_ga_site_search_module", "__return_true" ); </code>' ); ?></li>
+             
+              <div class="th-search-analytics-wrapper">
+            	 <h4><?php esc_html_e( 'Enable Site Search module Paste the following code into "functions.php" in your child theme.', 'th-advance-product-search' ); ?>: </h4>
 
-				
-			</ul>
+            	  <div class="th-code-box">
+			        <span class="th-code-label"><?php esc_html_e('Php','th-advance-product-search'); ?></span>
+			        <button class="copy-btn"><?php esc_html_e('Copy','th-advance-product-search'); ?></button>
+			        <pre><code>apply_filters("thaps_enable_ga_site_search_module", "__return_true" );</code></pre>
+      			  </div>
 
-			<h4><?php _e( 'To disable integrarion with Google Analytics paste following code "functions.php" your child theme.', 'th-advance-product-search' ); ?>: </h4>
-           <ul>
-				
-				
-				<li><?php printf( __( '%s', 'th-advance-product-search' ), '<code> thaps_google_analytics_events", "__return_false" ); </code>' ); ?></li>
-               </ul>
-           </br>
-               <ul>
+      			   <h4><?php esc_html_e( 'To disable integrarion with Google Analytics paste following code "functions.php" your child theme.:', 'th-advance-product-search' ); ?>: </h4>
 
-				<li><img src="<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'google-analtyitcs-result.png'); ?>"></li>
-			</ul>
-             <p><a target="_blank" href="<?php echo esc_url('https://themehunk.com/docs/th-advance-product-search/#google-analytics');?>" class="explore-google-analytics"><?php _e('Explore Doc','th-advance-product-search');?></a></p>
-				
-			</ul>
+            	  <div class="th-code-box">
+			        <span class="th-code-label"><?php esc_html_e('Php','th-advance-product-search'); ?></span>
+			        <button class="copy-btn"><?php esc_html_e('Copy','th-advance-product-search'); ?></button>
+			        <pre><code>apply_filters("thaps_google_analytics_events", "__return_false" );</code></pre>
+      			  </div>
 
-        <?php endif; }
+      			  <div class="image-wrapper">
+      			  	<img src="<?php echo esc_url(TH_ADVANCE_PRODUCT_SEARCH_IMAGES_URI.'google-analtyitcs-result.png'); ?>" />
+      			  </div>
+      			   <p><a target="_blank" href="<?php echo esc_url('https://themehunk.com/docs/th-advance-product-search/#google-analytics');?>" class="explore-google-analytics"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link h-4 w-4" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><?php esc_html_e('Explore Doc','th-advance-product-search');?></a></p>
 
-         public function premium_html_field_callback($args){
-
-            if($args[ 'id' ]=='premium'):
-
-			?>
-             <div class="th-upgrade-pro">
-             	<h4><?php esc_html_e('Upgrade to Premium Version Of Advance WordPress Search','th-advance-product-search'); ?></h4>
-             	<a href="<?php echo esc_url('https://themehunk.com/advance-product-search/'); ?>" class="button-upgrade" target="_blank"><i class="dashicons dashicons-lock"></i><?php esc_html_e('Upgrade Pro','th-advance-product-search'); ?></a>
-             </div>
-			
-
-			<ul class="th-search-images">
-				<li> <img src="<?php echo TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'images/search-voice.png'; ?>"> </li>
-				<li> <img src="<?php echo TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'images/search-loader.png'; ?>"> </li>
-				<li> <img src="<?php echo TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'images/search-autocomplete.png'; ?>"> </li>
-				<li> <img src="<?php echo TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'images/search-as.png'; ?>"> </li>
-				<li> <img src="<?php echo TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'images/search-style.png'; ?>"> </li>
-
-				
-			</ul>
-
-			<div class="th-upgrade-pro">
-             	<h4><?php esc_html_e('Upgrade to Premium Version Of Advance WordPress Search','th-advance-product-search'); ?></h4>
-             	<a href="<?php echo esc_url('https://themehunk.com/advance-product-search/'); ?>" class="button-upgrade"><i class="dashicons dashicons-lock"></i><?php esc_html_e('Upgrade Pro','th-advance-product-search'); ?></a>
-             </div>
+            </div>
 
         <?php endif; }
-
 
 
 		public function color_field_callback( $args ){
@@ -586,30 +740,6 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 	         } 
 		}
 
-		public function usefullplugin_field_callback( $args ) {
-
-			$is_html = isset( $args['html'] );
-
-			if ( $is_html ) {
-
-				$html = $args['html'];
-
-			  } else {
-
-				$plugin_image  = $args['plugin_image'];
-				$plugin_title  = $args['plugin_title'];
-				$plugin_link   = $args['plugin_link'];
-
-				
-				
-			}
-
-			?>
-
-			<div class="thaps-use-plugin"><img src="<?php echo esc_url($plugin_image);?>" /><a target="_blank" href="<?php echo esc_url($plugin_link);?>"><?php echo esc_html($plugin_title);?></a>
-			</div>
-
-		<?php }
 
 	//*********************************/	
     // add ,delete ,get , reset, option
@@ -785,7 +915,13 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Set' ) ):
 			
 				wp_enqueue_style( 'th-advance-product-search-admin', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'assets/css/admin.css', array(), TH_ADVANCE_PRODUCT_SEARCH_VERSION );
 				
-				wp_enqueue_script( 'wp-color-picker-alpha', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'assets/js/wp-color-picker-alpha.js', array('wp-color-picker'),true);
+				wp_enqueue_script(
+    'wp-color-picker-alpha',
+    TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI . 'assets/js/wp-color-picker-alpha.js',
+    array('wp-color-picker'),
+    '1.0',   // ✅ version
+    true     // ✅ footer
+);
 
 				wp_enqueue_script( 'thaps-setting-script', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'assets/js/thaps-setting.js', array('jquery'),true);
 

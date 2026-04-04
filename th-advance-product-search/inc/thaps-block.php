@@ -29,7 +29,7 @@ function register_blocks() {
         wp_register_script(
             $block['script_handle'],
             TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI . 'build/' . $block['script_handle'] . '.js',
-            array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+            array( 'wp-blocks', 'wp-element', 'wp-editor','customize-controls' ),
             filemtime( TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . '/build/' . $block['script_handle'] . '.js' )
         );
 
@@ -83,7 +83,7 @@ function th_advance_product_search_blocks_categories( $categories ) {
         [
             [
                 'slug'  => 'vayu-blocks',
-                'title' => __( 'ThemeHunk', 'th-advance-product-search-pro' ),
+                'title' => __( 'ThemeHunk', 'th-advance-product-search' ),
             ],
         ],
         $categories
@@ -109,7 +109,7 @@ function th_advance_product_search_blocks_editor_assets(){
     );
    }
     wp_enqueue_style(
-        'thaps-th-icon-css',
+        'th-icon-css',
         TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI . 'th-icon/style.css',
         TH_ADVANCE_PRODUCT_SEARCH_VERSION,
     );

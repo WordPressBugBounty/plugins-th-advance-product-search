@@ -45,6 +45,7 @@ if ( ! class_exists( 'TH_Advance_Product_Search' ) ):
 
                 require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . 'inc/thaps-nav-menu.php';
                 require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . 'inc/widget.php';
+                require_once TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_PATH . 'inc/deactivate-feedback.php';
             
         }
 
@@ -106,7 +107,7 @@ if ( ! class_exists( 'TH_Advance_Product_Search' ) ):
 
         public function th_advance_product_search_scripts(){
 
-          wp_enqueue_style( 'th-icon', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'th-icon/style.css', array(), TH_ADVANCE_PRODUCT_SEARCH_VERSION );  
+          wp_enqueue_style( 'th-icon-css', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'th-icon/style.css', array(), TH_ADVANCE_PRODUCT_SEARCH_VERSION );  
           wp_enqueue_style( 'th-advance-product-search-front', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'assets/css/thaps-front-style.css', array(), TH_ADVANCE_PRODUCT_SEARCH_VERSION );
           wp_add_inline_style('th-advance-product-search-front', th_advance_product_search_style());
           wp_enqueue_script( 'th-advance-product-search-front', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI. 'assets/js/thaps-search.js', array(
@@ -123,10 +124,17 @@ if ( ! class_exists( 'TH_Advance_Product_Search' ) ):
 
                         'thaps_ga_event'                    => apply_filters( 'thaps_google_analytics_events', true ),
                         'thaps_ga_site_search_module'       => apply_filters( 'thaps_enable_ga_site_search_module', false ),
+                        'tapsp_enable_voice_search' => (bool) th_advance_product_search()->get_option( 'tapsp_enable_voice_search' ),
+                        'tapsp_show_body_overlay'  => (bool) th_advance_product_search()->get_option( 'tapsp_show_body_overlay' ),
 
                     )
                 )
             );
+
+
+          if ( (bool) th_advance_product_search()->get_option( 'tapsp_enable_voice_search' ) ) {
+              wp_enqueue_script( 'tapsp-voice-search-js', TH_ADVANCE_PRODUCT_SEARCH_PLUGIN_URI . '/assets/js/thaps-voice-search.js', array( 'th-advance-product-search-front' ), TH_ADVANCE_PRODUCT_SEARCH_VERSION, true );
+          }
 
         }
 

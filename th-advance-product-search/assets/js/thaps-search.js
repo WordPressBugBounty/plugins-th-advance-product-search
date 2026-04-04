@@ -101,7 +101,8 @@
             onHint: null,
             width: 'auto',
             minChars: 1,
-            maxHeight: 300,
+            maxHeight: 472,
+            minHeight: 199,
             deferRequestBy: 0,
             params: {},
             formatResult: _formatResult,
@@ -758,6 +759,13 @@
             clearTimeout(that.onChangeTimeout);
             $(that.suggestionsContainer).hide();
             that.onHint(null);
+             // 🔴 === Overlay Hide ===
+            if (th_advance_product_search_options.tapsp_show_body_overlay == true) {
+            $('.tapsp-overlay').fadeOut(200, function () {
+                $(this).remove();
+            });
+            $('body').removeClass('tapsp-overlay-active');
+            }
         },
 
         suggest: function () {
@@ -798,6 +806,17 @@
                 that.select(0);
                 return;
             }
+
+            // 🟢 === Overlay Show ===
+            
+            if (th_advance_product_search_options.tapsp_show_body_overlay == true) {
+            let $overlay = $('.tapsp-overlay');
+            if (!$overlay.length) {
+                $overlay = $('<div class="tapsp-overlay"></div>').appendTo('body');
+            }
+            $overlay.fadeIn(200);
+            $('body').addClass('tapsp-overlay-active');
+           }
 
             /************************************/
             // thaps html suggestions inner HTML:
