@@ -1,14 +1,14 @@
 ====== Advance Product Search- Voice & Ajax Search for WooCommerce ========
 Contributors: ThemeHunk
 Author URI: : https://www.themehunk.com/
-Tags: product search, search, category search,ajax search,woocommerce search
+Tags: product search, search, live search,ajax search,woocommerce search
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Advanced Product Search boosts your store search with instant AJAX results, live suggestions, and smart category filtering, helping customers find products faster.
+Advanced Product Search boosts your store search with instant AJAX results, live suggestions helping customers find products faster.
 
 == Description ==
 
@@ -20,7 +20,7 @@ This Advance Product Search plugin is a powerful AJAX based search plugin which 
 
 This plugin enhances product discovery, reduces search friction, and helps customers reach the checkout faster.
 
-[Live Demo](https://wpthemes.themehunk.com/advanced-product-search/) | [Docs](https://themehunk.com/docs/th-advance-product-search/) | [More Details](https://themehunk.com/advanced-product-search/) | [support](https://themehunk.com/contact-us/).
+[Live Demo](https://wpthemes.themehunk.com/advanced-product-search/) | [ Documentation ](https://themehunk.com/docs/th-advance-product-search/) | [More Details](https://themehunk.com/advanced-product-search/) | [support](https://themehunk.com/contact-us/) | [get PRO](https://themehunk.com/advance-product-search/#price) |.
 
 **Key Features:-**
 
@@ -161,6 +161,11 @@ Yes, You can translate our plugin to desired language.
 5. search analytics
 
 == Changelog ==
+
+= 1.4.3 =
+Update: undefine array max-key issue resolved.
+Update: Fuzzy Search and Search Optimization - background: #9f9ed3;
+Update: Woocommerce tested WC tested up to: 10.8.0.
 
 = 1.4.2 =
 Update: Reset reload isssue resolved.
