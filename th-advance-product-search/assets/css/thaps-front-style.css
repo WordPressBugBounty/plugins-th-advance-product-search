@@ -1,5 +1,5 @@
 :root {
-  --highlight-color: #155dfc;
+  --highlight-color: #000000;
   --light-text-color1: #6a7282;
   --light-text-color2: #99a1af;
   --tw-shadow: 0 20px 50px #00000026;
@@ -127,7 +127,7 @@ background:#888;
     z-index: 9999999!important;
 }
 
-.thaps-autocomplete-selected { background: #eff6fff7; }
+.thaps-autocomplete-selected { background: #f5f5f5f7; }
 .thaps-autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
 .thaps-autocomplete-group { padding: 0.5rem; }
 .thaps-autocomplete-group strong { display: block; border-bottom: 1px solid #000; 
@@ -141,7 +141,7 @@ margin: 0 18px 2px 18px !important;
  align-items: center;
  padding: 5px 12px;
 gap: 16px;
-border-radius: 1rem;
+border-radius: 8px;
 outline: 0!important;
 }
 
@@ -166,17 +166,22 @@ outline: 0!important;
     transition: alL .2s linear;
 }
 .thaps-autocomplete-suggestion.thaps-suggestion-product .thaps-img{
-    width: 80px;
-    border-radius: 16px;
+    width: 46px;
+    border-radius: 5px;
 }
 .thaps-autocomplete-suggestion.thaps-suggestion-product .thaps-img img{
-    border-radius: 9px;
+    border-radius: 5px;
 }
 .thaps-autocomplete-suggestion .thaps-price{
-    font-size: 16px;
+font-size: 14px;
     font-weight: 700;
     display: block;
     color: #101828 !important;
+    display: flex;
+    align-items: center;
+    padding: 4px 4px;
+    border-radius: 5px;
+    border: 1px solid #f3f3f3;
 }
 
 .thaps-autocomplete-suggestion.thaps-suggestion-heading .thaps-title{
@@ -218,7 +223,7 @@ color: #333;
 line-height:normal;
 }
 .thaps-price del{
-color:#949494;
+color:#494949;
 margin-right:0.3rem;
 opacity: 0.5;
 }
@@ -372,16 +377,14 @@ outline:none;
     text-transform: capitalize;
     color: #101828;
 }
-.thaps-autocomplete-suggestion .thaps-price{
-display:flex;
-}
+
 .thaps-sku{
 font-size: 0.8rem;
     font-weight: 500;
     color: #555;
 }
 .thaps-desc{
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.25;
     display: block;
     margin-top: 3px;
@@ -389,7 +392,7 @@ font-size: 0.8rem;
     text-overflow: ellipsis;
     white-space: normal;
     max-width: 100%;
-    color: var(--light-text-color1);
+    color: #414141;
 }
 .thaps-content-right{
     text-align: right;
@@ -524,4 +527,58 @@ div.thaps-autocomplete-suggestions{
 .tapsp-overlay-active .taiowc-fixed-cart .taiowc-content,
 .tapsp-overlay-active .taiowcp-fixed-cart .taiowcp-content{
     z-index: 2!important;
+}
+
+
+
+.tapsp-stock{
+    font-size: 9px;
+    display: block;
+    margin-top: 3px;
+    font-weight: 700;
+    text-transform: capitalize;
+    opacity: .5;
+}
+.th-traditional .tapsp-stock{
+    margin: 0 0 9px 0;
+}
+
+/* --- Stock --- */
+.thaps-autocomplete-suggestions > .thaps-suggestion-wrap.thaps-suggestion-product .tapsp-stock {
+    font-size: 9px;
+    display: block;
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+.tapsp-sale{
+    background: #111;
+    color: #fff;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+    border-radius: 0.2rem;
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    text-transform: capitalize;
+}
+.th-traditional .tapsp-sale{
+    margin-top: 0;
+    margin-bottom: 9px;
+}
+
+
+.tapsp-featured::before {
+    content: "\f155";
+    font-family: Dashicons;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    text-indent: 0px;
+    font-size:0.867rem;
+    color:#dab257;
+    margin-right:0.3rem;
 }
