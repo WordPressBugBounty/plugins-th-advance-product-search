@@ -87,7 +87,12 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Functions' ) ):
 		$post_type = $q['post_type'] ?? 'any';
 
 		// 🔹 Expand synonyms + fuzzy
-		$search_terms = array( $term );
+			$search_terms = preg_split(
+			    '/\s+/u',
+			    trim( $term )
+			);
+
+			$search_terms = array_filter( $search_terms );
 
 		// 🔹 Indexed table first
 		// 🔹 Indexed table only for products
@@ -121,13 +126,24 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Functions' ) ):
 		foreach ( $search_terms as $like_term ) {
 			$like = "%" . $wpdb->esc_like( $like_term ) . "%";
 
-			// Title / content / excerpt
-			$clauses[] = "({$wpdb->posts}.post_title LIKE '{$like}')";
+			$clauses[] = $wpdb->prepare(
+				"({$wpdb->posts}.post_title LIKE %s)",
+				$like
+			);
+
+			
 			if ( th_advance_product_search()->get_option( 'tapsp_search-in-description' ) ) {
-				$clauses[] = "({$wpdb->posts}.post_content LIKE '{$like}')";
+				$clauses[] = $wpdb->prepare(
+					"({$wpdb->posts}.post_content LIKE %s)",
+					$like
+				);
 			}
+			
 			if ( th_advance_product_search()->get_option( 'tapsp_search-in-short-description' ) ) {
-				$clauses[] = "({$wpdb->posts}.post_excerpt LIKE '{$like}')";
+				$clauses[] = $wpdb->prepare(
+					"({$wpdb->posts}.post_excerpt LIKE %s)",
+					$like
+				);
 			}
 
 			// SKU (product only)

@@ -304,7 +304,7 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Options' ) ):
 								'type'    => 'checkbox',
 								'title'   => esc_html__( 'Enable Product Description', 'th-advance-product-search' ),
 								'desc'    => '',
-								'default' => true
+								'default' => false
 							    ),
 							array(
 								'id'      => 'enable_product_sku',
@@ -604,14 +604,14 @@ if ( ! class_exists( 'TH_Advancde_Product_Search_Options' ) ):
 							array(
 								'id'      => 'tapsp_search_in_custom_fld',
 								'type'    => 'selectize',
-								'title'   => esc_html__( 'Search in Custom Field', 'th-advance-product-search' ),
+								'title'   => esc_html__( 'Search in Custom Field (Pro)', 'th-advance-product-search' ),
 								'options' => '',
 								
 							),
 							array(
 								'id'      => 'tapsp_search_in_custom_post_type',
 								'type'    => 'text',
-								'title'   => esc_html__( 'Search in Custom Post Type', 'th-advance-product-search' ),
+								'title'   => esc_html__( 'Search in Custom Post Type (Pro)', 'th-advance-product-search' ),
 								'desc'    => esc_html__( 'Custom posts are generated using plugins. Include slugs separated by commas.','th-advance-product-search-pro' ),
 
 								
