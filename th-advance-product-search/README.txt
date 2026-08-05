@@ -4,7 +4,7 @@ Author URI: : https://www.themehunk.com/
 Tags: product search, search, live search,ajax search,woocommerce search
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,10 +162,13 @@ Yes, You can translate our plugin to desired language.
 
 == Changelog ==
 
-= 1.4.7 =
-* Update: Language files added.
+= 1.4.8 =
 * Update: Right side suggestion box issue resolved.
 * update: Style Improved.
+* Fix: Deprecated Notice - trim(): Passing null to parameter #1 ($string) of type string.
+
+= 1.4.7 =
+* Update: Language files added.
 
 = 1.4.6 =
 * Security Enhancement: Fixed a reported vulnerability issue.
